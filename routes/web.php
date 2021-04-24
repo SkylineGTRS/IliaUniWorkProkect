@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::get('/', [HomeController::class,'Home'])
+    ->name('home');
+Route::prefix('posts')->group(function () {
+    Route::get('/', [HomeController::class, 'getAllPosts'])
+        ->name('posts');
+    Route::get('/{id}', [HomeController::class, 'getPostById'])
+        ->where('id', '[0-9]+')
+        ->name('postById');
 });
